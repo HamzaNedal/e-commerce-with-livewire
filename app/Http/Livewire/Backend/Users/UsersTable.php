@@ -16,7 +16,7 @@ class UsersTable extends LivewireDatatable
     public $hideable = 'select';
     protected $userController;
     public $user_id;
-    protected $listeners = ['triggerConfirm', 'confirmed'];
+    protected $listeners = ['triggerConfirm', 'confirmed','columns'];
     public function __construct()
     {
        

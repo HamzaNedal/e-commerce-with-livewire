@@ -47,14 +47,12 @@
                            </label>
                        </span>
                      </div>
-                  
-                    
                   </div>
                </div>
              </div>
              <div class="m-portlet__foot m-portlet__foot--fit">
                <div class="m-form__actions">
-                  <button  class="btn btn-primary"  >
+                  <button  class="btn btn-primary">
                      {{ __("Save") }}
                   </button>
                  
@@ -64,7 +62,6 @@
                </div>
             </div>
  
-       </div>
 
       </form>
  </div>

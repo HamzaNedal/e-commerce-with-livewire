@@ -20,6 +20,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'status',
+        'dob',
         'phone_number'
     ];
 
@@ -41,6 +43,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function setPasswordAttribute($password)
+    {   
+        $this->attributes['password'] = bcrypt($password);
+    }
+    public function setStatusAttribute($status)
+    {   $this->attributes['status']  = $status ? 1 : 0 ;
+    }
     public function scopeStatusToSearch($query, $value)
     {
         if($value == 'true'){

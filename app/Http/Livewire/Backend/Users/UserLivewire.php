@@ -2,14 +2,15 @@
 
 namespace App\Http\Livewire\Backend\Users;
 
+use App\Http\Controllers\Backend\UserController;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Livewire\Component;
 
 class UserLivewire extends Component
 {
     public $user;
-    protected $listeners = ['editUser','resetForm'];
-
+    protected $listeners = ['editUser','resetForm','messageAlertSuccess'];
     public function render()
     {
         return view('livewire.backend.users.user-livewire');
@@ -42,18 +43,29 @@ class UserLivewire extends Component
     public function save()
     {  
          $this->validate();
-        
+         $this->emit('resetForm');
+         $this->emit('columns');
          if(array_key_exists('id',$this->user)){
-            dd($this->user);
+            return $this->update();
          }
-         dd($this->user);
+         return $this->store();
         
     }
     function store(){
-        
+        User::create($this->user);
+        $this->emit('messageAlertSuccess','User added successfully');
     }
     function update(){
-
+        User::where('id',$this->user['id'])->update($this->user);
+        $this->emit('messageAlertSuccess','User Updated successfully');
+        $this->emit('showMe','none');
+    }
+    public function messageAlertSuccess($message)
+    {
+        $this->alert(
+            'success',
+            "$message"
+        );
     }
 
 }
