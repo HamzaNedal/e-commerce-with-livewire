@@ -20,7 +20,7 @@ class RolesTable extends LivewireDatatable
             Column::name('permissions.name:group_concat')
                 ->label('permissions'),
             Column::callback(['id', 'name'], function ($id, $name) {
-                return view('livewire.backend.actions', ['id' => $id, 'name' => $name, 'route_name' => 'roles']);
+                return view('livewire.backend.actions', ['id' => $id, 'name' => $name, 'route_name' => 'roles','hasPermissionEdit' => 'edit_role', 'hasPermissionDelete' => 'delete_role']);
             })
         ];
     }
@@ -28,7 +28,11 @@ class RolesTable extends LivewireDatatable
 
     function delete($id)
     {
-        $permissionController = new  RoleController();
-        $permissionController->destroy($id);
+        if (auth()->user()->hasPermissionTo('delete_role')) {
+            $permissionController = new  RoleController();
+            $permissionController->destroy($id);
+        }
+        abort(403, 'unauthrized');
+       
     }
 }

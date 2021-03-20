@@ -37,7 +37,12 @@ class EditRole extends Component
     }
     public function update(RoleController $permission)
     {
-        $data = new Request(['roleData' => $this->roleData, 'permissions' => $this->selectedPermissions]);
-        $permission->update($data);
+        if (auth()->user()->hasPermissionTo('edit_role')) {
+            $data = new Request(['roleData' => $this->roleData, 'permissions' => $this->selectedPermissions]);
+            $permission->update($data);
+        }else{
+            abort(403, 'unauthrized');
+        }
+       
     }
 }

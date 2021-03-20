@@ -11,5 +11,16 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10">
     </script>
     <x-livewire-alert::scripts />
+    {{-- <script>
+        document.getElementById('goPage').addEventListener('click',function() {
+            console.log('test');
+           route = document.getElementById('goPage').dataset.route;
+           Livewire.emit('loadComponent',route);
+       });
+       Livewire.on('loadComponent', showComponent=> {
+           console.log(showComponent);
+           // document.getElementById('loadComponent').innerHTML = showComponent;
+       });
+   </script> --}}
     @stack('js')
     <!--end::Page Snippets -->

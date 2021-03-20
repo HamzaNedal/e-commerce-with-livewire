@@ -20,7 +20,6 @@
     });
 
     Livewire.on('showMe', show=> {
-        console.log(show);
         document.getElementById('showMe').style.display = show;
     });
     // 
@@ -60,6 +59,7 @@
                     <div class="m-portlet__head-tools">
                         <ul class="m-portlet__nav">
                             <li class="m-portlet__nav-item">
+                                @can('add_user')
                                 <a class="btn btn-accent m-btn m-btn--custom m-btn--pill m-btn--icon m-btn--air" id='clickToShowMe'>
                                     <span>
                                         <i class="la la-plus"></i>
@@ -68,6 +68,8 @@
                                         </span>
                                     </span>
                                 </a>
+                                @endcan
+                               
                             </li>
                         </ul>
                     </div>

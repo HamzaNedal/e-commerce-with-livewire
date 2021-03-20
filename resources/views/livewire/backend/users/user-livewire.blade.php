@@ -48,6 +48,22 @@
                        </span>
                      </div>
                   </div>
+                  <div class="col-md-6">
+                        <label class="col-3 col-form-label">
+                          {{__('Roles')}}
+                        </label>
+                        <div class="col-9">
+                           <div class="m-radio-inline">
+                              @foreach ($roles as $role)
+                              <label class="m-radio">
+                                 <input type="radio" name="example_8" value="{{ $role->name }}" wire:model="user.role">
+                                  {{$role->name}}
+                                 <span></span>
+                              </label>
+                              @endforeach
+                           </div>
+                        </div>
+                     </div>
                </div>
              </div>
              <div class="m-portlet__foot m-portlet__foot--fit">

@@ -18,7 +18,7 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-Route::group(['prefix'=>'admin','as'=>'admin.'],function () {
+Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>'auth'],function () {
     Route::get('/dashboard', [App\Http\Controllers\Backend\HomeController::class, 'index'])->name('home');
 
     Route::get('/users',[App\Http\Controllers\Backend\UserController::class, 'index'])->name('users.index');

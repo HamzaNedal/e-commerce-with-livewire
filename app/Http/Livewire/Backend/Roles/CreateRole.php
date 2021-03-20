@@ -28,7 +28,12 @@ class CreateRole extends Component
     }
     public function save(RoleController $permission)
     {
-        $data = new Request(['name' => $this->name, 'permissions' => $this->selectedPermissions]);
-        $permission->store($data);
+        if (auth()->user()->hasPermissionTo('add_role')) {
+            $data = new Request(['name' => $this->name, 'permissions' => $this->selectedPermissions]);
+            $permission->store($data);
+        }else{
+            abort(403, 'unauthrized');
+        }
+        
     }
 }
