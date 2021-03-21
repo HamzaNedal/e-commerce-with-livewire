@@ -34,38 +34,93 @@
 								</h4>
 								<i class="m-menu__section-icon flaticon-more-v3"></i>
 							</li>
-							<li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true"  m-menu-submenu-toggle="hover">
+						@can('show_user')
+						<li class="m-menu__item  m-menu__item--submenu {{ isset($active) && $active == 'users' ? 'm-menu__item--open m-menu__item--expanded' : '' }}" aria-haspopup="true"  m-menu-submenu-toggle="hover">
+							<a  href="javascript:;" class="m-menu__link m-menu__toggle">
+								<i class="m-menu__link-icon flaticon-layers"></i>
+								<span class="m-menu__link-text">
+									{{ __('Users') }}
+								</span>
+								<i class="m-menu__ver-arrow la la-angle-right"></i>
+							</a>
+							<div class="m-menu__submenu ">
+								<span class="m-menu__arrow"></span>
+								<ul class="m-menu__subnav">
+								
+									<li class="m-menu__item {{ isset($active) && $active == 'users' ? 'm-menu__item--active' : '' }}" aria-haspopup="true" >
+										<a  href="{{ route('admin.users.index') }}" class="m-menu__link ">
+											<i class="m-menu__link-bullet m-menu__link-bullet--dot" >
+												<span></span>
+											</i>
+											<span class="m-menu__link-text" id="goPage" data-route='users.index'>
+												{{ __('Show users') }}
+											</span>
+										</a>
+									</li>
+									
+
+								</ul>
+							</div>
+						</li>
+						@endcan
+							@can('show_roles')
+							<li class="m-menu__item  m-menu__item--submenu {{ isset($active) && $active == 'roles' ? 'm-menu__item--open m-menu__item--expanded' : '' }}" aria-haspopup="true"  m-menu-submenu-toggle="hover">
 								<a  href="javascript:;" class="m-menu__link m-menu__toggle">
 									<i class="m-menu__link-icon flaticon-layers"></i>
 									<span class="m-menu__link-text">
-										Base
+										{{ __('Roles') }}
 									</span>
 									<i class="m-menu__ver-arrow la la-angle-right"></i>
 								</a>
 								<div class="m-menu__submenu ">
 									<span class="m-menu__arrow"></span>
 									<ul class="m-menu__subnav">
-										<li class="m-menu__item  m-menu__item--parent" aria-haspopup="true" >
-											<span class="m-menu__link">
-												<span class="m-menu__link-text">
-													Base
-												</span>
-											</span>
-										</li>
-										<li class="m-menu__item " aria-haspopup="true" >
-											<a  href="#" class="m-menu__link ">
+									
+										<li class="m-menu__item {{ isset($active) && $active == 'roles' ? 'm-menu__item--active' : '' }}" aria-haspopup="true" >
+											<a  href="{{ route('admin.roles.index') }}" class="m-menu__link ">
 												<i class="m-menu__link-bullet m-menu__link-bullet--dot" >
 													<span></span>
 												</i>
-												<span class="m-menu__link-text" id="goPage" data-route='users.index'>
-													State Colors
+												<span class="m-menu__link-text" id="goPage" data-route='roles.index'>
+													{{ __('Show roles') }}
 												</span>
 											</a>
 										</li>
+										
 
 									</ul>
 								</div>
 							</li>
+							@endcan
+							@can('show_products')
+							<li class="m-menu__item  m-menu__item--submenu {{ isset($active) && $active == 'products' ? 'm-menu__item--open m-menu__item--expanded' : '' }}" aria-haspopup="true"  m-menu-submenu-toggle="hover">
+								<a  href="javascript:;" class="m-menu__link m-menu__toggle">
+									<i class="m-menu__link-icon flaticon-layers"></i>
+									<span class="m-menu__link-text">
+										{{ __('Products') }}
+									</span>
+									<i class="m-menu__ver-arrow la la-angle-right"></i>
+								</a>
+								<div class="m-menu__submenu ">
+									<span class="m-menu__arrow"></span>
+									<ul class="m-menu__subnav">
+									
+										<li class="m-menu__item {{ isset($active) && $active == 'products' ? 'm-menu__item--active' : '' }}" aria-haspopup="true" >
+											<a  href="{{ route('admin.products.index') }}" class="m-menu__link ">
+												<i class="m-menu__link-bullet m-menu__link-bullet--dot" >
+													<span></span>
+												</i>
+												<span class="m-menu__link-text" id="goPage" data-route='products.index'>
+													{{ __('Show products') }}
+												</span>
+											</a>
+										</li>
+										
+
+									</ul>
+								</div>
+							</li>
+							@endcan
 						</ul>
 					</div>
 					<!-- END: Aside Menu -->

@@ -15,7 +15,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('backend.users.index');
+        $active = 'users';
+        return view('backend.users.index',compact('active'));
     }
 
     /**

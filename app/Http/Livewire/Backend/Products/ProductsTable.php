@@ -1,26 +1,27 @@
 <?php
 
-namespace App\Http\Livewire\Backend\Users;
+namespace App\Http\Livewire\Backend\Products;
 
-use App\Http\Controllers\Backend\UserController;
-use App\Models\User;
+use App\Http\Controllers\Backend\ProductsController;
+use App\Models\Product;
+use Livewire\Component;
 use Mediconesystems\LivewireDatatables\BooleanColumn;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\DateColumn;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 use Mediconesystems\LivewireDatatables\NumberColumn;
 
-class UsersTable extends LivewireDatatable
+class ProductsTable extends LivewireDatatable
 {
-    public $model = User::class;
+    public $model = Product::class;
     public $hideable = 'select';
-    protected $userController;
-    public $user_id;
+    protected $productController;
+    public $product_id;
     protected $listeners = ['triggerConfirm', 'confirmed', 'columns'];
     public function __construct()
     {
 
-        $this->userController = new  UserController();
+        $this->productController = new  ProductsController();
     }
 
     public function columns()
@@ -29,17 +30,17 @@ class UsersTable extends LivewireDatatable
             Column::checkbox(),
             NumberColumn::name('id'),
             Column::name('name')->filterable()->searchable(),
-            Column::name('email')->filterable()->searchable(),
-            DateColumn::name('dob')->filterable(),
-            Column::name('phone_number')->filterable()->searchable(),
-            Column::name('roles.name')
-                ->label('role'),
+            Column::name('users.name')->filterable()->searchable()->label('owner'),
+            Column::name('categories.title')->filterable()->searchable()->label('category'),
+            DateColumn::name('description')->truncate()->filterable(),
+            NumberColumn::name('stock')->filterable(),
+            NumberColumn::name('price')->filterable(),
             DateColumn::name('created_at')->filterable(),
             BooleanColumn::callback(['id', 'status'], function ($id, $status) {
                 return view('livewire.backend.status-yes-no', ['id' => $id, 'status' => $status]);
             })->filterable(['false' => 'InActive', 'true' => 'Active'], 'statusToSearch')->label('Status'),
             Column::callback(['id'], function ($id) {
-                return view('livewire.backend.actions', ['id' => $id, 'route_name' => 'users', 'hasPermissionEdit' => 'edit_user', 'hasPermissionDelete' => 'delete_user']);
+                return view('livewire.backend.actions', ['id' => $id, 'route_name' => 'products', 'hasPermissionEdit' => 'edit_product', 'hasPermissionDelete' => 'delete_product']);
             }),
 
         ];
@@ -47,15 +48,15 @@ class UsersTable extends LivewireDatatable
 
     public function changeStatus($id)
     {
-        $this->userController->changeStatus($id);
+        $this->productController->changeStatus($id);
     }
     public function confirmed()
     {
         $this->alert(
             'success',
-            'User has been deleted.'
+            'Product has been deleted.'
         );
-        $this->userController->destroy($this->user_id);
+        $this->productController->destroy($this->product_id);
     }
     public function triggerConfirm()
     {
@@ -70,8 +71,8 @@ class UsersTable extends LivewireDatatable
     }
     function delete($id)
     {
-        if (auth()->user()->hasPermissionTo('delete_user')) {
-            $this->user_id = $id;
+        if (auth()->user()->hasPermissionTo('delete_product')) {
+            $this->product_id = $id;
             $this->emit('triggerConfirm');
         }else{
             abort(403, 'unauthrized');
@@ -80,8 +81,10 @@ class UsersTable extends LivewireDatatable
     }
     function showEdit($id)
     {
-        if (auth()->user()->hasPermissionTo('edit_user')) {
-            $this->emit('editUser', $id);
-        }
+        // dd($id);
+        $this->emit('editProduct', $id);
+        // if (auth()->user()->hasPermissionTo('edit_product')) {
+        //     $this->emit('editProduct', $id);
+        // }
     }
 }

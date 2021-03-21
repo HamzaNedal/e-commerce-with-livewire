@@ -21,8 +21,11 @@ class MediaFactory extends Factory
      */
     public function definition()
     {
+        // $faker = FakerFactory::create();
         return [
-            //
+            'file_name' => $this->faker->image('public/products/',640,480, null, false),
+            'file_type' => '',
+            'file_size' => '',
         ];
     }
 }

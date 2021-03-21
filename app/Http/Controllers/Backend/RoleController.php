@@ -11,13 +11,15 @@ class RoleController extends Controller
 {
     public function index()
     {
-        return view('backend.roles.index');
+        $active = 'roles';
+        return view('backend.roles.index',compact('active'));
     }
 
     public function create()
     {
+        $active = 'roles';
         $permissions = Permission::get();
-        return view('backend.roles.create', compact('permissions'));
+        return view('backend.roles.create', compact('permissions','active'));
     }
 
     public function store(Request $request)
@@ -29,11 +31,12 @@ class RoleController extends Controller
 
     public function edit($id)
     {
+        $active = 'roles';
         $role = Role::findOrFail($id);
         $permissions = Permission::get();
         $rolePermissions = array_fill_keys($role->permissions->pluck('id')->toArray(), true);
         $permissionsAndRolePermissions = ['roleData' => ['id' => $role->id, 'name' => $role->name], 'rolePermissions' => $rolePermissions, 'permissions' => $permissions];
-        return view('backend.roles.edit', compact('permissionsAndRolePermissions'));
+        return view('backend.roles.edit', compact('permissionsAndRolePermissions','active'));
     }
     public function update(Request $request)
     {

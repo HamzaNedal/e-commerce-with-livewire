@@ -69,8 +69,7 @@ class UserLivewire extends Component
        $this->emit('messageAlertSuccess','User added successfully');
     }
     function update(){
-        // dd($this->user);
-        $user = User::FindOrFail($this->user['id']);
+        $user = User::findOrFail($this->user['id']);
         $user->syncRoles([$this->user['role']]);
         unset($this->user['role']);
         $user->update($this->user);

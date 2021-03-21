@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +20,7 @@ Route::get('/', function () {
 
 Auth::routes();
 Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>'auth'],function () {
+
     Route::get('/dashboard', [App\Http\Controllers\Backend\HomeController::class, 'index'])->name('home');
 
     Route::get('/users',[App\Http\Controllers\Backend\UserController::class, 'index'])->name('users.index');
@@ -28,9 +30,12 @@ Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>'auth'],function ()
     Route::delete('/users/{id}',[App\Http\Controllers\Backend\UserController::class, 'destroy'])->name('users.destroy');
 
 
-    Route::get('/roles', [App\Http\Controllers\Backend\RoleController::class, 'index'])->name('roles');
+    Route::get('/roles', [App\Http\Controllers\Backend\RoleController::class, 'index'])->name('roles.index');
     Route::get('/roles/create',[App\Http\Controllers\Backend\RoleController::class, 'create'])->name('roles.create');
     Route::get('/roles/{id}/edit',[App\Http\Controllers\Backend\RoleController::class, 'edit'])->name('roles.edit');
     Route::get('/roles/{id}',[App\Http\Controllers\Backend\RoleController::class, 'show'])->name('roles.show');
+
+    Route::get('/products',[App\Http\Controllers\Backend\ProductsController::class, 'index'])->name('products.index');
+    Route::post('/products',[App\Http\Controllers\Backend\ProductsController::class, 'store'])->name('products.store');
 });
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
