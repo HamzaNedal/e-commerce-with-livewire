@@ -26,7 +26,7 @@ class RoleController extends Controller
     {
         $role = Role::create(['name' => $request->name]);
         $role->syncPermissions(array_keys($request->permissions, true));
-        return redirect(route('admin.roles'));
+        return redirect(route('admin.roles.index'));
     }
 
     public function edit($id)
@@ -44,7 +44,7 @@ class RoleController extends Controller
         $role->name = $request->roleData['name'];
         $role->save();
         $role->syncPermissions(array_keys($request->permissions, true));
-        return redirect(route('admin.roles'));
+        return redirect(route('admin.roles.index'));
     }
     public function destroy($id)
     {

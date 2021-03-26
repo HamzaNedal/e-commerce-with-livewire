@@ -23,7 +23,7 @@ class MediaFactory extends Factory
     {
         // $faker = FakerFactory::create();
         return [
-            'file_name' => $this->faker->image('public/products/',640,480, null, false),
+            'file_name' => $this->faker->image('storage/app/public/media',640,480, null, false),
             'file_type' => '',
             'file_size' => '',
         ];

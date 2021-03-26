@@ -14,6 +14,16 @@ class SizeSeeder extends Seeder
      */
     public function run()
     {
-        Size::factory()->count(10)->create();
+        $sizes = [
+        ['title'=>'XS'],
+        ['title'=>'S'],
+        ['title'=>'M'],
+        ['title'=>'L'],
+        ['title'=>'XL'],
+        ['title'=>'XXL'],
+        ['title'=>'XXXL'],
+    ];
+        Size::insert($sizes);
+        // Size::factory()->count(10)->create();
     }
 }

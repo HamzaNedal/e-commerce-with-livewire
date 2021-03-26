@@ -37,8 +37,16 @@ class Product extends Model
     {
         $this->attributes['status']  = $status ? 1 : 0;
     }
-
-    public function categories()
+    public function scopeStatusToSearch($query, $value)
+    {
+        if($value == 'true'){
+            $value = 1; 
+        }else{
+            $value = 0;
+        }
+        $query->where(['status'=>$value])->get();
+    }
+    public function category()
     {
         return $this->belongsTo(Category::class, 'fk_category', 'id');
     }
@@ -53,5 +61,9 @@ class Product extends Model
     public function sizes()
     {
         return $this->belongsToMany(Size::class, 'product_sizes', 'fk_product', 'fk_size');
+    }
+    public function media()
+    {
+        return $this->hasMany(Media::class, 'product_id', 'id');
     }
 }

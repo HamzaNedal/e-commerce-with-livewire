@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Backend\Products;
 
 use App\Http\Controllers\Backend\ProductsController;
 use App\Models\Product;
-use Livewire\Component;
 use Mediconesystems\LivewireDatatables\BooleanColumn;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\DateColumn;
@@ -13,11 +12,16 @@ use Mediconesystems\LivewireDatatables\NumberColumn;
 
 class ProductsTable extends LivewireDatatable
 {
-    public $model = Product::class;
+    // public $model = Product::class;
     public $hideable = 'select';
     protected $productController;
     public $product_id;
     protected $listeners = ['triggerConfirm', 'confirmed', 'columns'];
+    public function builder()
+    {
+        return auth()->user()->hasRole('admin') ? Product::query() : Product::query()->where('fk_user',auth()->user()->id);
+    }
+
     public function __construct()
     {
 
@@ -31,7 +35,7 @@ class ProductsTable extends LivewireDatatable
             NumberColumn::name('id'),
             Column::name('name')->filterable()->searchable(),
             Column::name('users.name')->filterable()->searchable()->label('owner'),
-            Column::name('categories.title')->filterable()->searchable()->label('category'),
+            Column::name('category.title')->filterable()->searchable()->label('category'),
             DateColumn::name('description')->truncate()->filterable(),
             NumberColumn::name('stock')->filterable(),
             NumberColumn::name('price')->filterable(),
@@ -82,9 +86,9 @@ class ProductsTable extends LivewireDatatable
     function showEdit($id)
     {
         // dd($id);
-        $this->emit('editProduct', $id);
-        // if (auth()->user()->hasPermissionTo('edit_product')) {
-        //     $this->emit('editProduct', $id);
-        // }
+        // $this->emit('editProduct', $id);
+        if (auth()->user()->hasPermissionTo('edit_product')) {
+            $this->emit('editProduct', $id);
+        }
     }
 }

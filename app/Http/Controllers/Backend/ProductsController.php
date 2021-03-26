@@ -85,6 +85,7 @@ class ProductsController extends Controller
         $product = Product::findOrFail($id);
         $product->sizes()->detach();
         $product->colors()->detach();
+        $product->media()->delete();
         $product->delete();
     }
     public function changeStatus($id){
@@ -92,4 +93,32 @@ class ProductsController extends Controller
         $product->status = !$product->status;
         $product->save();
     }
+    public function uploadImages()
+    {
+            dd(request()->all());
+        // if ($equestr->images && count($request->images) > 0) {
+        //     store_image_for_posts($post, $request);
+        // }
+
+
+    }
+    public function destroy_media(){
+        dd('test');
+    }
+    public function categories_index()
+    {
+        $active = 'products';
+        return view('backend.products.categories.index',compact('active'));
+    }
+    public function colors_index()
+    {
+        $active = 'products';
+        return view('backend.products.colors.index',compact('active'));
+    }
+    public function sizes_index()
+    {
+        $active = 'products';
+        return view('backend.products.sizes.index',compact('active'));
+    }
+    
 }

@@ -1,7 +1,6 @@
 	<!--begin::Base Scripts -->
     <script src="{{ asset('backend') }}/assets/vendors/base/vendors.bundle.js" type="text/javascript"></script>
     <script src="{{ asset('backend') }}/assets/demo/default/base/scripts.bundle.js" type="text/javascript"></script>
-    <script src="{{ asset('backend') }}/assets/demo/default/custom/crud/forms/widgets/select2.js" type="text/javascript"></script>
 
     <!--end::Base Scripts -->   
     <!--begin::Page Vendors -->

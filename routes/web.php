@@ -37,5 +37,11 @@ Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>'auth'],function ()
 
     Route::get('/products',[App\Http\Controllers\Backend\ProductsController::class, 'index'])->name('products.index');
     Route::post('/products',[App\Http\Controllers\Backend\ProductsController::class, 'store'])->name('products.store');
+    Route::post('/upload-product-images',[App\Http\Controllers\Backend\ProductsController::class, 'uploadImages'])->name('products.uploadimages');
+    Route::post('/delete-product-media',[App\Http\Controllers\Backend\ProductsController::class, 'destroy_media'])->name('products.media.destroy');
+    Route::get('/products/categories',[App\Http\Controllers\Backend\ProductsController::class, 'categories_index'])->name('products.categories.index');
+    Route::get('/products/colors',[App\Http\Controllers\Backend\ProductsController::class, 'colors_index'])->name('products.colors.index');
+    Route::get('/products/sizes',[App\Http\Controllers\Backend\ProductsController::class, 'sizes_index'])->name('products.sizes.index');
+   
 });
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

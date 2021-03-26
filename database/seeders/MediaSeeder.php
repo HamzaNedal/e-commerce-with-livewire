@@ -24,5 +24,7 @@ class MediaSeeder extends Seeder
                 'updated_at' => $product->created_at,
             ];
         })->create();
+       
+   
     }
 }

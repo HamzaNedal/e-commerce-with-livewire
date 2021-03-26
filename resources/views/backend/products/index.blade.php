@@ -15,24 +15,63 @@
     document.getElementById('clickToShowMe').addEventListener('click',function() {
          
        Livewire.emit('resetForm');
-       Livewire.emit('showMe','block');
+       Livewire.emit('showMe',{'display':'block'});
     });
 
     document.getElementById('clickToHideMe').addEventListener('click',function() {
-       Livewire.emit('showMe','none');
+       Livewire.emit('showMe',{'display':'none'});
     });
 
-    Livewire.on('showMe', show=> {
-        document.getElementById('showMe').style.display = show;
+    Livewire.on('showMe', data=> {
+
+        // console.log($("#post-images"));
+        $('#categories').val(data['category']?? 1).trigger('change');
+        $('#users').val(data['user'] ?? {{ auth()->user()->id }}).trigger('change');
+        $('#colors').val(data['colors']).trigger('change');
+        $('#sizes').val(data['sizes']).trigger('change');
+        
+        // $("#post-images").fileinput(
+        //     {
+        //           theme: "fa",
+        //           maxFileCount: 5,
+        //           allowedFileTypes: ['image'],
+        //           showCancel: true,
+        //           showRemove: true,
+        //           showUpload: true,
+        //           overwriteInitial: false,
+                  
+        //           initialPreviewAsData:true,
+        //           initialPreviewFileType:'image',
+         
+        //     }
+        //  );
+        //  $("#post-images").append();
+        
+        //  var plugin = $('#post-images').data('fileinput');
+        // console.log(plugin.initialPreview = data['images']); // get initialPreview
+        // plugin.trigger('change');
+        document.getElementById('showMe').style.display = data['display'];
     });
-    window.addEventListener('contentChanged', event => {
-        $('.m-select2').select2();
+    // window.addEventListener('contentChanged', event => {
+    //     console.log(event);
+    //     $('.m-select2').select2();
+    //     $('#m_select2_3').select2({
+            
+    //         data: [
+    //             {
+    //             "id": 71,
+    //             "text": "Garret Bosco",
+    //             "selected": true
+    //             },
+    //         ]
+    //     });
+    //     // $('#m_select2_3').trigger('change');
        
-    });
+    // });
     // 
 </script>
 @endpush
-<div class="m-content">
+<div class="m-content grid grid-rows-1 grid-flow-col grid-cols-1">
     {{-- <div class="m-5"></div> --}}
     <div class="row">
         <div class="col-md-12 " >
@@ -49,7 +88,6 @@
                     </div>
                 </div>
                 <div class="m-portlet__body">
-              
                     <livewire:backend.products.product-livewire  />
                 </div>
             </div>

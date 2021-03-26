@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     use HasFactory,Sluggable;
+
+    protected $fillable = ['title','slug','status'];
     /**
      * Return the sluggable configuration array for this model.
      *
@@ -21,5 +23,18 @@ class Category extends Model
                 'source' => 'title'
             ]
         ];
+    }
+    public function setStatusAttribute($status)
+    {
+        $this->attributes['status']  = $status ? 1 : 0;
+    }
+    public function scopeStatusToSearch($query, $value)
+    {
+        if($value == 'true'){
+            $value = 1; 
+        }else{
+            $value = 0;
+        }
+        $query->where(['status'=>$value])->get();
     }
 }

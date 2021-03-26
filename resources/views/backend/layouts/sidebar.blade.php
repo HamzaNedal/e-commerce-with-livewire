@@ -115,6 +115,36 @@
 												</span>
 											</a>
 										</li>
+										<li class="m-menu__item {{ isset($active) && $active == 'products' ? 'm-menu__item--active' : '' }}" aria-haspopup="true" >
+											<a  href="{{ route('admin.products.categories.index') }}" class="m-menu__link ">
+												<i class="m-menu__link-bullet m-menu__link-bullet--dot" >
+													<span></span>
+												</i>
+												<span class="m-menu__link-text" id="goPage" data-route='categories.index'>
+													{{ __('Show categories') }}
+												</span>
+											</a>
+										</li>
+										<li class="m-menu__item {{ isset($active) && $active == 'products' ? 'm-menu__item--active' : '' }}" aria-haspopup="true" >
+											<a  href="{{ route('admin.products.colors.index') }}" class="m-menu__link ">
+												<i class="m-menu__link-bullet m-menu__link-bullet--dot" >
+													<span></span>
+												</i>
+												<span class="m-menu__link-text" id="goPage" data-route='colors.index'>
+													{{ __('Show colors') }}
+												</span>
+											</a>
+										</li>
+										<li class="m-menu__item {{ isset($active) && $active == 'products' ? 'm-menu__item--active' : '' }}" aria-haspopup="true" >
+											<a  href="{{ route('admin.products.sizes.index') }}" class="m-menu__link ">
+												<i class="m-menu__link-bullet m-menu__link-bullet--dot" >
+													<span></span>
+												</i>
+												<span class="m-menu__link-text" id="goPage" data-route='sizes.index'>
+													{{ __('Show sizes') }}
+												</span>
+											</a>
+										</li>
 										
 
 									</ul>
