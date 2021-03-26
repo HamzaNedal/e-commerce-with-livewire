@@ -11,7 +11,12 @@ use Spatie\Permission\Models\Role;
 class RolesTable extends LivewireDatatable
 {
     public $model = Role::class;
-
+    protected $edit;
+    protected $delete;
+    public function __construct() {
+        $this->edit = auth()->user()->hasPermissionTo('edit_role');
+        $this->delete = auth()->user()->hasPermissionTo('delete_role');
+    }
     public function columns()
     {
         return [
@@ -20,7 +25,7 @@ class RolesTable extends LivewireDatatable
             Column::name('permissions.name:group_concat')
                 ->label('permissions'),
             Column::callback(['id', 'name'], function ($id, $name) {
-                return view('livewire.backend.actions', ['id' => $id, 'name' => $name, 'route_name' => 'roles','hasPermissionEdit' => 'edit_role', 'hasPermissionDelete' => 'delete_role']);
+                return view('livewire.backend.actions', ['id' => $id, 'name' => $name, 'route_name' => 'roles','hasPermissionEdit' => $this->edit, 'hasPermissionDelete' => $this->delete]);
             })
         ];
     }

@@ -13,6 +13,12 @@ class ColorsTable extends LivewireDatatable
 {
     public $color_id;
     protected $listeners = ['triggerConfirm', 'confirmed', 'columns'];
+    protected $edit;
+    protected $delete;
+    public function __construct() {
+        $this->edit = auth()->user()->hasPermissionTo('edit_color');
+        $this->delete = auth()->user()->hasPermissionTo('delete_color');
+    }
     public function builder()
     {
         return  Color::query();
@@ -25,7 +31,7 @@ class ColorsTable extends LivewireDatatable
             NumberColumn::name('id'),
             Column::name('title')->filterable()->searchable(),
             Column::callback(['id'], function ($id) {
-                return view('livewire.backend.actions', ['id' => $id, 'route_name' => 'colors', 'hasPermissionEdit' => 'edit_color', 'hasPermissionDelete' => 'delete_color']);
+                return view('livewire.backend.actions', ['id' => $id, 'route_name' => 'colors', 'hasPermissionEdit' => $this->edit, 'hasPermissionDelete' => $this->delete]);
             }),
 
         ];

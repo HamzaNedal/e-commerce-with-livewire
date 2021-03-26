@@ -5,10 +5,11 @@ namespace App\Models;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use GeneaLabs\LaravelModelCaching\Traits\Cachable;
 
 class Category extends Model
 {
-    use HasFactory,Sluggable;
+    use HasFactory,Sluggable,Cachable;
 
     protected $fillable = ['title','slug','status'];
     /**

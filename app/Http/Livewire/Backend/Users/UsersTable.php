@@ -16,9 +16,14 @@ class UsersTable extends LivewireDatatable
     public $hideable = 'select';
     protected $userController;
     public $user_id;
+    protected $edit;
+    protected $delete;
     protected $listeners = ['triggerConfirm', 'confirmed', 'columns'];
+    
     public function __construct()
     {
+        $this->edit = auth()->user()->hasPermissionTo('edit_user');
+        $this->delete = auth()->user()->hasPermissionTo('delete_user');
 
         $this->userController = new  UserController();
     }
@@ -39,7 +44,8 @@ class UsersTable extends LivewireDatatable
                 return view('livewire.backend.status-yes-no', ['id' => $id, 'status' => $status]);
             })->filterable(['false' => 'InActive', 'true' => 'Active'], 'statusToSearch')->label('Status'),
             Column::callback(['id'], function ($id) {
-                return view('livewire.backend.actions', ['id' => $id, 'route_name' => 'users', 'hasPermissionEdit' => 'edit_user', 'hasPermissionDelete' => 'delete_user']);
+                // dump($this->edit);
+                return view('livewire.backend.actions', ['id' => $id, 'route_name' => 'users', 'hasPermissionEdit' => $this->edit, 'hasPermissionDelete' => $this->delete]);
             }),
 
         ];

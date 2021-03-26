@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Backend\Products;
 
 use App\Http\Controllers\Backend\ProductsController;
 use App\Models\Product;
+use Illuminate\Support\Facades\Cache;
 use Mediconesystems\LivewireDatatables\BooleanColumn;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\DateColumn;
@@ -16,20 +17,28 @@ class ProductsTable extends LivewireDatatable
     public $hideable = 'select';
     protected $productController;
     public $product_id;
+    protected $edit;
+    protected $delete;
     protected $listeners = ['triggerConfirm', 'confirmed', 'columns'];
     public function builder()
     {
+        
+        
         return auth()->user()->hasRole('admin') ? Product::query() : Product::query()->where('fk_user',auth()->user()->id);
     }
-
+   
+       
     public function __construct()
     {
-
+        $this->edit = auth()->user()->hasPermissionTo('edit_product');
+        $this->delete = auth()->user()->hasPermissionTo('delete_product');
+        
         $this->productController = new  ProductsController();
     }
 
     public function columns()
     {
+       
         return [
             Column::checkbox(),
             NumberColumn::name('id'),
@@ -44,7 +53,7 @@ class ProductsTable extends LivewireDatatable
                 return view('livewire.backend.status-yes-no', ['id' => $id, 'status' => $status]);
             })->filterable(['false' => 'InActive', 'true' => 'Active'], 'statusToSearch')->label('Status'),
             Column::callback(['id'], function ($id) {
-                return view('livewire.backend.actions', ['id' => $id, 'route_name' => 'products', 'hasPermissionEdit' => 'edit_product', 'hasPermissionDelete' => 'delete_product']);
+                return view('livewire.backend.actions', ['id' => $id, 'route_name' => 'products', 'hasPermissionEdit' => $this->edit, 'hasPermissionDelete' => $this->delete]);
             }),
 
         ];

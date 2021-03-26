@@ -13,6 +13,12 @@ class SizesTable extends LivewireDatatable
 {
     public $size_id;
     protected $listeners = ['triggerConfirm', 'confirmed', 'columns'];
+    protected $edit;
+    protected $delete;
+    public function __construct() {
+        $this->edit = auth()->user()->hasPermissionTo('edit_size');
+        $this->delete = auth()->user()->hasPermissionTo('delete_size');
+    }
     public function builder()
     {
         return  Size::query();
@@ -25,7 +31,7 @@ class SizesTable extends LivewireDatatable
             NumberColumn::name('id'),
             Column::name('title')->filterable()->searchable(),
             Column::callback(['id'], function ($id) {
-                return view('livewire.backend.actions', ['id' => $id, 'route_name' => 'Sizes', 'hasPermissionEdit' => 'edit_size', 'hasPermissionDelete' => 'delete_size']);
+                return view('livewire.backend.actions', ['id' => $id, 'route_name' => 'Sizes', 'hasPermissionEdit' => $this->edit, 'hasPermissionDelete' => $this->delete]);
             }),
 
         ];

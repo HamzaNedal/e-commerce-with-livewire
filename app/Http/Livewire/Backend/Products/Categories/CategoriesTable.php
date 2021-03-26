@@ -14,6 +14,12 @@ class CategoriesTable extends LivewireDatatable
     
     public $category_id;
     protected $listeners = ['triggerConfirm', 'confirmed', 'columns'];
+    protected $edit;
+    protected $delete;
+    public function __construct() {
+        $this->edit = auth()->user()->hasPermissionTo('edit_category');
+        $this->delete = auth()->user()->hasPermissionTo('delete_category');
+    }
     public function builder()
     {
         return  Category::query();
@@ -30,7 +36,7 @@ class CategoriesTable extends LivewireDatatable
                 return view('livewire.backend.status-yes-no', ['id' => $id, 'status' => $status]);
             })->filterable(['false' => 'InActive', 'true' => 'Active'], 'statusToSearch')->label('Status'),
             Column::callback(['id'], function ($id) {
-                return view('livewire.backend.actions', ['id' => $id, 'route_name' => 'categories', 'hasPermissionEdit' => 'edit_category', 'hasPermissionDelete' => 'delete_category']);
+                return view('livewire.backend.actions', ['id' => $id, 'route_name' => 'categories', 'hasPermissionEdit' => $this->edit, 'hasPermissionDelete' => $this->delete]);
             }),
 
         ];
