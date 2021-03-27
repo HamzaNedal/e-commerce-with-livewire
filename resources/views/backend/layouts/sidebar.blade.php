@@ -151,6 +151,35 @@
 								</div>
 							</li>
 							@endcan
+							@can('show_sliders')
+							<li class="m-menu__item  m-menu__item--submenu {{ isset($active) && $active == 'slider' ? 'm-menu__item--open m-menu__item--expanded' : '' }}" aria-haspopup="true"  m-menu-submenu-toggle="hover">
+								<a  href="javascript:;" class="m-menu__link m-menu__toggle">
+									<i class="m-menu__link-icon flaticon-layers"></i>
+									<span class="m-menu__link-text">
+										{{ __('Slider') }}
+									</span>
+									<i class="m-menu__ver-arrow la la-angle-right"></i>
+								</a>
+								<div class="m-menu__submenu ">
+									<span class="m-menu__arrow"></span>
+									<ul class="m-menu__subnav">
+									
+										<li class="m-menu__item {{ isset($active) && $active == 'slider' ? 'm-menu__item--active' : '' }}" aria-haspopup="true" >
+											<a  href="{{ route('admin.sliders.index') }}" class="m-menu__link ">
+												<i class="m-menu__link-bullet m-menu__link-bullet--dot" >
+													<span></span>
+												</i>
+												<span class="m-menu__link-text" id="goPage" data-route='slider.index'>
+													{{ __('Show slider') }}
+												</span>
+											</a>
+										</li>
+										
+
+									</ul>
+								</div>
+							</li>
+							@endcan
 						</ul>
 					</div>
 					<!-- END: Aside Menu -->

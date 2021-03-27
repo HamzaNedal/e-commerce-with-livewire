@@ -25,6 +25,9 @@ class Category extends Model
             ]
         ];
     }
+    public function products(){
+       return $this->hasMany(Product::class,'fk_category','id');
+    }
     public function setStatusAttribute($status)
     {
         $this->attributes['status']  = $status ? 1 : 0;

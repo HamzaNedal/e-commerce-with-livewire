@@ -42,6 +42,7 @@ Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>'auth'],function ()
     Route::get('/products/categories',[App\Http\Controllers\Backend\ProductsController::class, 'categories_index'])->name('products.categories.index');
     Route::get('/products/colors',[App\Http\Controllers\Backend\ProductsController::class, 'colors_index'])->name('products.colors.index');
     Route::get('/products/sizes',[App\Http\Controllers\Backend\ProductsController::class, 'sizes_index'])->name('products.sizes.index');
-   
+    Route::view('/sliders','backend.sliders.index',['active'=>'slider'])->name('sliders.index');
 });
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/products/details/{slug}', [App\Http\Controllers\HomeController::class, 'product_details'])->name('product_details');

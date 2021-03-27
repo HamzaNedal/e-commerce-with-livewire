@@ -27,7 +27,7 @@ class PermissionSeeder extends Seeder
         //  Permission::create(['name' => 'show_roles']);
         //  Permission::create(['name' => 'add_role']);
         //  Permission::create(['name' => 'edit_role']);
-         Permission::create(['name' => 'delete_role']);
+        //  Permission::create(['name' => 'delete_role']);
         //  Permission::create(['name' => 'add_color']);
         //  Permission::create(['name' => 'edit_color']);
         //  Permission::create(['name' => 'show_colors']);
@@ -40,5 +40,19 @@ class PermissionSeeder extends Seeder
         //  Permission::create(['name' => 'add_size']);
         //  Permission::create(['name' => 'edit_size']);
         //  Permission::create(['name' => 'delete_size']);
-    }
+         Permission::create(['name' => 'show_sliders']);
+         Permission::create(['name' => 'add_slider']);
+         Permission::create(['name' => 'edit_slider']);
+         Permission::create(['name' => 'delete_slider']);
+
+         Permission::create(['name' => 'show_orders']);
+         Permission::create(['name' => 'edit_orders']);
+         Permission::create(['name' => 'delete_orders']);
+
+         Permission::create(['name' => 'read_contact_us']);
+
+         
+
+
+  }
 }

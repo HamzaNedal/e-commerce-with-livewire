@@ -9,4 +9,5 @@ use Illuminate\Database\Eloquent\Model;
 class Slider extends Model
 {
     use HasFactory,Cachable;
+    protected $fillable = ['title','description','link','image'];
 }
