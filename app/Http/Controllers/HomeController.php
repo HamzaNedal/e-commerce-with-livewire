@@ -29,11 +29,42 @@ class HomeController extends Controller
         $sliders = Slider::get();
         $categories = Category::get();
         // $products = Product::paginate(25);
-        return view('frontend.home',compact('sliders','categories'));
+        return view('frontend.home', compact('sliders', 'categories'));
     }
 
     public function product_details($slug)
     {
-        dd($slug);
+        $product = Product::whereSlug($slug)->whereStatus(1)->first() ?? abort(404);
+
+        return view('frontend.product-details', compact('product'));
+    }
+
+    public function cart()
+    {
+
+
+        // dd();
+        // dd(session('cart'));
+        //     $cart = session('cart')->forget('total_quantity');
+        //    $cart = session('cart')->forget('total_price');
+        
+        // $unique = session('cart')->each(function ($item)
+        // {
+        //     if (is_array($item)) {
+        //         dd($item);
+        //     }
+         
+        // })
+        // ->unique(function ($item) {
+        //     if (is_array($item)) {
+        //         return $item['id'] . $item['color'] . $item['size'];
+        //     }
+        // });
+        // dd($unique);
+
+        // foreach ($variable as $key => $value) {
+        //     # code...
+        // }
+        return view('frontend.cart');
     }
 }

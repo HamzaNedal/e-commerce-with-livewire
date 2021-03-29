@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Backend\Products;
 
 use App\Http\Controllers\Backend\ProductsController;
+use App\Models\AdditionalInformation;
 use App\Models\Category;
 use App\Models\Color;
 use App\Models\Media;
@@ -39,7 +40,9 @@ class ProductLivewire extends Component
     // }
     function save(){
        
-     
+       
+    
+        // dd($this->product);
         // $this->validate();
         $this->emit('resetForm');
         $this->emit('columns');
@@ -73,17 +76,11 @@ class ProductLivewire extends Component
             
             $product->colors()->sync($this->product['colors']);
             $product->sizes()->sync($this->product['sizes']);
+            
+            $addinfo = $this->additional_information_filter();
+            // dd($addinfo);
+            $product->additional_information()->createMany($addinfo);
             $this->upoladImage($product);
-            // foreach ($this->product['images'] as  $image) {
-            //     $file_name = str_replace('public/','',$image->store('public/media'));
-            //     Media::create([
-            //         'product_id' => $product->id,
-            //         'file_name' =>  $file_name,
-            //         'file_size' => $image->getSize(),
-            //         'file_type' => $image->getMimeType(),
-            //     ]);
-            // }
-            // $product->media()->sync();
             DB::commit();
             $this->emit('showMe',['display'=>'none']);
         } catch (\Exception $e) {
@@ -109,6 +106,9 @@ class ProductLivewire extends Component
            
             $product->colors()->sync($this->product['colors']);
             $product->sizes()->sync($this->product['sizes']);
+            $addinfo = $this->additional_information_filter();
+            $product->additional_information()->delete();
+            $product->additional_information()->createMany($addinfo);
             $this->upoladImage($product);
             DB::commit();
             $this->emit('showMe',['display'=>'none']);
@@ -135,14 +135,21 @@ class ProductLivewire extends Component
                 'key'=>$media->id,
                 ];
         }
-        // dd($images);
+        // dd();
         // $this->dispatchBrowserEvent('addInitPhoto', ['images'=>$images]);
+       $additional_information =  $product->additional_information()->select('id','key','value')->get()->toArray();
+    //    $this->product['additional_information']['ides'] = 
+    //    dd($additinal)
+        if(empty($additional_information)){
+            $additional_information = null;
+        }
         $this->emit('showMe',[
             'display'=>'block',
             'category'=>$product->fk_category,
             'user'=>$product->fk_user,
             'colors'=>$product->colors->pluck('id')->toArray(),
             'sizes'=>$product->sizes->pluck('id')->toArray(),
+            'additional_information'=>$additional_information,
             'images'=>$images,
            
         ]);
@@ -165,5 +172,17 @@ class ProductLivewire extends Component
                 'file_type' => $image->getMimeType(),
             ]);
         }
+    }
+
+    public function additional_information_filter()
+    {
+        $additinal = collect($this->product['additional_information']??[]);
+        $additinal =  $additinal->map(function($additinal){
+            $additinal['display_name'] = $additinal['key'];
+            return $additinal;
+        })->filter(function($additinal) {
+            return  ($additinal['value'] != "" &&  $additinal['key'] != "");
+        });
+        return $additinal->toArray();
     }
 }

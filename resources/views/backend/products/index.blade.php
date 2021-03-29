@@ -12,8 +12,9 @@
 <script src="{{ asset('backend') }}/assets/app/js/dashboard.js" type="text/javascript"></script>
 
 <script>
+   
     document.getElementById('clickToShowMe').addEventListener('click',function() {
-         
+        
        Livewire.emit('resetForm');
        Livewire.emit('showMe',{'display':'block'});
     });
@@ -29,7 +30,15 @@
         $('#users').val(data['user'] ?? {{ auth()->user()->id }}).trigger('change');
         $('#colors').val(data['colors']).trigger('change');
         $('#sizes').val(data['sizes']).trigger('change');
-        
+        console.log(data['additional_information']);
+       if(data['additional_information'] != undefined ){
+        var $repeater = $('#m_repeater_1').repeater({
+            initEmpty: true,
+        });
+         $repeater.setList(data['additional_information']);
+       }else{
+        //  $repeater.setList({'key':'','value':''});
+       }
         // $("#post-images").fileinput(
         //     {
         //           theme: "fa",

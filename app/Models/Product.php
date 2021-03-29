@@ -67,4 +67,12 @@ class Product extends Model
     {
         return $this->hasMany(Media::class, 'product_id', 'id');
     }
+    public function reviews()
+    {
+        return $this->hasMany(Reviews::class, 'fk_product', 'id');
+    }
+    public function additional_information()
+    {
+        return $this->hasMany(AdditionalInformation::class, 'product_id', 'id');
+    }
 }

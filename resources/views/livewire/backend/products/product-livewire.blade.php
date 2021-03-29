@@ -107,75 +107,80 @@
                </div>
 
                {{-- input-repeat --}}
-               {{-- <div class="col-md-12" wire:ignore>
-               <div id="m_repeater_1">
-                  <div class="form-group  m-form__group row" id="m_repeater_1">
-                     <label  class="col-lg-2 col-form-label">
-                        {{ __('Additional information') }}
-                     </label>
-                     <div data-repeater-list="" class="col-lg-10">
-                        <div data-repeater-item class="form-group m-form__group row align-items-center">
-                           <div class="col-md-3">
-                              <div class="m-form__group m-form__group--inline">
-                                 <div class="m-form__label">
-                                    <label>
-                                      {{ __('Key') }}
-                                    </label>
+               <div class="col-md-12" wire:ignore>
+
+                  <div id="m_repeater_1">
+                     <div class="form-group  m-form__group row" id="m_repeater_1">
+                        <label  class="col-lg-2 col-form-label">
+                           {{ __('More Information') }}:
+                        </label>
+                        <div data-repeater-list="" class="col-lg-10">
+                           <div data-repeater-item class="form-group m-form__group row align-items-center">
+                              
+                              <div class="col-md-3">
+                                 <div class="m-form__group m-form__group--inline">
+                                    <div class="m-form__label">
+                                       <label>
+                                       {{ __("Key") }}
+                                       </label>
+                                    </div>
+                                    <div class="m-form__control">
+                                       <input type="text" class="form-control m-input" name="key">
+                                    </div>
                                  </div>
-                                 <div class="m-form__control">
-                                    <input type="text" class="form-control m-input" wire:model="product.additional.key">
-                                 </div>
+                                 <div class="d-md-none m--margin-bottom-10"></div>
                               </div>
-                              <div class="d-md-none m--margin-bottom-10"></div>
-                           </div>
-                           <div class="col-md-3">
-                              <div class="m-form__group m-form__group--inline">
-                                 <div class="m-form__label">
-                                    <label class="m-label m-label--single">
-                                       {{ __('Value') }}
-                                    </label>
+                              <div class="col-md-3">
+                                 <div class="m-form__group m-form__group--inline">
+                                    <div class="m-form__label">
+                                       <label class="m-label m-label--single">
+                                          {{ __("Value") }}
+                                       </label>
+                                    </div>
+                                    <div class="m-form__control">
+                                       <input type="text" class="form-control m-input" name="value">
+                                    </div>
                                  </div>
-                                 <div class="m-form__control">
-                                    <input type="text" class="form-control m-input" wire:model="product.additional.value">
-                                 </div>
+                                 <div class="d-md-none m--margin-bottom-10"></div>
                               </div>
-                              <div class="d-md-none m--margin-bottom-10"></div>
-                           </div>
-                           <div class="col-md-4">
-                              <div data-repeater-delete="" class="btn-sm btn btn-danger m-btn m-btn--icon m-btn--pill">
-                                 <span>
-                                    <i class="la la-trash-o"></i>
+                              <div class="col-md-4">
+                                 <div data-repeater-delete="" class="btn-sm btn btn-danger m-btn m-btn--icon m-btn--pill">
                                     <span>
-                                       Delete
+                                       <i class="la la-trash-o"></i>
+                                       <span>
+                                          Delete
+                                       </span>
                                     </span>
-                                 </span>
+                                 </div>
                               </div>
                            </div>
                         </div>
                      </div>
-                  </div>
-                  <div class="m-form__group form-group row">
-                     <label class="col-lg-2 col-form-label"></label>
-                     <div class="col-lg-4">
-                        <div data-repeater-create="" class="btn btn btn-sm btn-brand m-btn m-btn--icon m-btn--pill m-btn--wide">
-                           <span>
-                              <i class="la la-plus"></i>
+                     <div class="m-form__group form-group row" >
+                        <label class="col-lg-2 col-form-label"></label>
+                        <div class="col-lg-4">
+                           <div data-repeater-create="" class="btn btn btn-sm btn-brand m-btn m-btn--icon m-btn--pill m-btn--wide" id="addNewInput">
                               <span>
-                                 Add
+                                 <i class="la la-plus"></i>
+                                 <span>
+                                    Add
+                                 </span>
                               </span>
-                           </span>
+                           </div>
                         </div>
                      </div>
                   </div>
+
                </div>
-               </div> --}}
+
+
             </div>
 
 
              </div>
              <div class="m-portlet__foot m-portlet__foot--fit">
                <div class="m-form__actions">
-                  <button  class="btn btn-primary">
+                  <button  class="btn btn-primary" id="save">
                      {{ __("Save") }}
                   </button>
                  
@@ -323,6 +328,7 @@
          $('.m-select2').select2();
          $('.m-select2').select2().trigger('change');
          $('.select2-container').css('width','100%');
+        
         });
          // Dropzone.options.myAwesomeDropzone = {
          //    maxFilesize: 2,
@@ -343,6 +349,12 @@
         });
         $('#post-images').on('filecleared', function(event) {
              @this.set(`product.images`, null);
+         });
+         $('#save').on('click',function(){
+
+           data =  Object.values($('#m_repeater_1').repeaterVal())[0];
+           console.log(data);
+           @this.set(`product.additional_information`, data);
          });
         
     </script>

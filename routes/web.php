@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Auth::routes();
 Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>'auth'],function () {
@@ -44,5 +44,8 @@ Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>'auth'],function ()
     Route::get('/products/sizes',[App\Http\Controllers\Backend\ProductsController::class, 'sizes_index'])->name('products.sizes.index');
     Route::view('/sliders','backend.sliders.index',['active'=>'slider'])->name('sliders.index');
 });
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/products/details/{slug}', [App\Http\Controllers\HomeController::class, 'product_details'])->name('product_details');
+Route::get('/cart', [App\Http\Controllers\HomeController::class, 'cart'])->name('cart');
+Route::get('/about', [App\Http\Controllers\HomeController::class, 'about'])->name('about');
+Route::get('/contact', [App\Http\Controllers\HomeController::class, 'contact'])->name('contact');

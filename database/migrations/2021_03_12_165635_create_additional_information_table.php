@@ -15,6 +15,7 @@ class CreateAdditionalInformationTable extends Migration
     {
         Schema::create('additional_information', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('product_id');
             $table->string('display_name');
             $table->string('key');
             $table->string('value');
